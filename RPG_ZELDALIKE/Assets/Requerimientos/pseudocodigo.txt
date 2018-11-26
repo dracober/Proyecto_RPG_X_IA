@@ -1,0 +1,47 @@
+Diagrama Pseudocodigo
+
+Enemigo a distancia
+int Velocidad de movimiento
+int Dano
+int Rango de vision
+int vida
+status idle
+
+Metodos
+Movement();
+Atack();
+Follow();
+Idle();
+
+Boss
+int Velocidad de movimiento
+int Dano
+int Rango de vision
+int vida
+status idle
+boolean secret power
+
+Metodos
+Movement();
+Atack();
+Follow();
+Idle();
+Power Atack();
+Low Life Behaivor();
+
+Mini-boss
+int Velocidad de movimiento
+int Dano
+int Rango de vision
+int vida
+status idle
+int magia
+bool inmune
+
+Metodos
+Movement();
+Atack();
+Follow();
+Idle();
+Spell atack();
+InmuneStatus();

@@ -1,0 +1,24 @@
+Requerimientos Generales
+1.-Boss
+
+2.-Mini Boss
+
+3.-Enemigo cuerpo a cuerpo
+
+-UI
+-Mostrar vida del boss y mini-boss
+-Mostrar gameover
+-Enemigo derrotado
+-Mostrar vida del jugador
+
+-Reiniciar el juego cuando el jugador muera o utilizar checkpoints 
+
+-Ubicar a los enemigos normales?
+
+boss por faces de combate
+
+interaccion con npcs
+
+logica difusa para sistema de reputacion 
+que tan bueno o mala puedes ser mediante logica difusa
+en el cual los npcs reaccionan a estas
