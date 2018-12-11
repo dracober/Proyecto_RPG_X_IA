@@ -99,18 +99,20 @@ public class Enemy : MonoBehaviour {
             anim.SetBool("walking", true);
         }
 
-        // Una última comprobación para evitar bugs forzando la posición inicial
+        // comprobación para evitar bugs forzando la posición inicial
         if (target == initialPosition && distance < 0.05f){
             transform.position = initialPosition; 
             // Y cambiamos la animación de nuevo a Idle
             anim.SetBool("walking", false);
         }
 
-        // Y un debug optativo con una línea hasta el target
+        // debug con una línea hasta el target
         Debug.DrawLine(transform.position, target, Color.green);
     }
 
-    // Podemos dibujar el radio de visión y ataque sobre la escena dibujando una esfera
+    
+
+    // Radio de visión y ataque sobre la escena dibujando una esfera
     void OnDrawGizmosSelected() {
 
         Gizmos.color = Color.yellow;
@@ -121,7 +123,7 @@ public class Enemy : MonoBehaviour {
 
     IEnumerator Attack(float seconds){
         attacking = true;  // Activamos la bandera
-        // Si tenemos objetivo y el prefab es correcto creamos la roca
+        // tenemos el objetivo y el prefab ,se crea la roca
         if (target != initialPosition && rockPrefab != null) {
             Instantiate(rockPrefab, transform.position, transform.rotation);
             // Esperamos los segundos de turno antes de hacer otro ataque

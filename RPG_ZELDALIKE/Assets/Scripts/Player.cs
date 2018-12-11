@@ -10,6 +10,8 @@ public class Player : MonoBehaviour {
     public GameObject initialMap; 
     public GameObject slashPrefab;
 
+    
+
     Animator anim;
     Rigidbody2D rb2d;
     Vector2 mov;  // Ahora es visible entre los métodos
@@ -29,7 +31,7 @@ public class Player : MonoBehaviour {
         anim = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
 
-        //* Recuperamos el collider de ataque y lo desactivamos
+        //*
         attackCollider = transform.GetChild(0).GetComponent<CircleCollider2D>();
         attackCollider.enabled = false;  
 
@@ -40,19 +42,19 @@ public class Player : MonoBehaviour {
 
     void Update () {  
 
-        // Detectamos el movimiento
+        // Se detecta el movimiento
         Movements ();
 
-        // Procesamos las animaciones
+        // Proceso animaciones
         Animations ();
 
         // Ataque con espada
         SwordAttack (); 
 
-        // Ataque con rayo maestro
+        // Ataque Magico
         SlashAttack ();
 
-        // Prevenir movimiento
+        //  Stop
         PreventMovement ();
 
     }
@@ -63,7 +65,7 @@ public class Player : MonoBehaviour {
     }
 
     void Movements () {
-        // Detectamos el movimiento en un vector 2D
+        // se detecta el movimiento en un vector 2D
         mov = new Vector2(
             Input.GetAxisRaw("Horizontal"),
             Input.GetAxisRaw("Vertical")
@@ -83,22 +85,22 @@ public class Player : MonoBehaviour {
 
     void SwordAttack () {
 
-        // Vamos actualizando la posición de la colisión de ataque
+        //  actualizando la posición - colisión de ataque
         if (mov != Vector2.zero) {
             attackCollider.offset = new Vector2(mov.x/2, mov.y/2);
         }
 
-        // Buscamos el estado actual mirando la información del animador
+        // estado actual mirando la información del animador
         AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
         bool attacking = stateInfo.IsName("Player_Attack");
 
-        // Detectamos el ataque, tiene prioridad por lo que va abajo del todo
+        // Detectar el ataque (x)
         if ((Input.GetKeyDown("space") || Input.GetKeyDown(KeyCode.X)) && !attacking ){  
             anim.SetTrigger("attacking");
         }
 
-        // Activamos el collider a la mitad de la animación de ataque
-        if(attacking) { // El normalized siempre resulta ser un ciclo entre 0 y 1 
+        // se activa el collider a la mitad de la animación de ataque
+        if(attacking) { //  normalized ciclo entre 0 y 1 
             float playbackTime = stateInfo.normalizedTime;
 
             if (playbackTime > 0.33 && playbackTime < 0.66) attackCollider.enabled = true;
@@ -108,19 +110,18 @@ public class Player : MonoBehaviour {
     }
 
     void SlashAttack () {
-        // Buscamos el estado actual mirando la información del animador
+        //  estado actual mirando la información del animador
         AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
         bool loading = stateInfo.IsName("Player_Slash");
 
-        // Ataque a distancia
+        // Ataque Magico rango
         if (Input.GetKeyDown(KeyCode.LeftAlt) || Input.GetKeyDown(KeyCode.Z)){ 
             anim.SetTrigger("loading");
             aura.AuraStart();
         } else if (Input.GetKeyUp(KeyCode.LeftAlt) || Input.GetKeyUp(KeyCode.Z)){ 
             anim.SetTrigger("attacking");
             if (aura.IsLoaded()) {
-                // Para que se mueva desde el principio tenemos que asignar un
-                // valor inicial al movX o movY en el edtitor distinto a cero
+                //  asignar un valor inicial al movX o movY en el edtitor distinto a cero
                 float angle = Mathf.Atan2(
                     anim.GetFloat("movY"), 
                     anim.GetFloat("movX")
@@ -139,7 +140,7 @@ public class Player : MonoBehaviour {
             StartCoroutine(EnableMovementAfter(0.4f));
         } 
 
-        // Prevenimos el movimiento mientras cargamos
+        // Stop con animacion
         if (loading) { 
             movePrevent = true;
         }

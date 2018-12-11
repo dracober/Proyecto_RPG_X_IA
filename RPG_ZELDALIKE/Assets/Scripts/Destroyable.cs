@@ -18,13 +18,13 @@ public class Destroyable : MonoBehaviour {
         anim = GetComponent<Animator>();
     }
 
-    // Detectamos la colisión con una corrutina
+    // Se detecta la colisión con una corrutina
     IEnumerator OnTriggerEnter2D (Collider2D col) {
 
-        // Si es un ataque
+        // if de attack
         if (col.tag == "Attack") {
 
-            // Reproducimos la animación de destrucción y esperamos
+            // Reproducimos la animación de destrucción 
             anim.Play(destroyState);
             yield return new WaitForSeconds(timeForDisable);
 
