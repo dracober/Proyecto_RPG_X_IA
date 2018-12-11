@@ -6,6 +6,7 @@ using UnityEngine.Assertions;
 
 public class Player : MonoBehaviour {
 
+    public int health = 250;
     public float speed = 4f;
     public GameObject initialMap; 
     public GameObject slashPrefab;
@@ -13,6 +14,7 @@ public class Player : MonoBehaviour {
     Animator anim;
     Rigidbody2D rb2d;
     Vector2 mov;  // Ahora es visible entre los métodos
+
 
     CircleCollider2D attackCollider;
 
@@ -36,6 +38,7 @@ public class Player : MonoBehaviour {
         Camera.main.GetComponent<MainCamera>().SetBound(initialMap);
 
         aura = transform.GetChild(1).GetComponent<Aura>();
+
     }
 
     void Update () {  

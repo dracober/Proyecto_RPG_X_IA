@@ -280,6 +280,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c09b259fc5bbfd40af49ba9cdd45962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 250
   speed: 3
   initialMap: {fileID: 565290181}
   slashPrefab: {fileID: 1998457574410122, guid: aba72e3499bb57c4dbf22f9fe4d7c619,
@@ -2046,8 +2047,12 @@ GameObject:
   - component: {fileID: 1906038298}
   - component: {fileID: 1906038300}
   - component: {fileID: 1906038299}
+  - component: {fileID: 1906038302}
+  - component: {fileID: 1906038301}
+  - component: {fileID: 1906038303}
+  - component: {fileID: 1906038304}
   m_Layer: 11
-  m_Name: boss
+  m_Name: mini boss
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2060,7 +2065,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1906038297}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.23, y: -5.25, z: 0}
+  m_LocalPosition: {x: -6.13, y: -5.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 157169380}
@@ -2077,16 +2082,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15997d082e28b4044865ba8b5cd07881, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 100
-  CurrentHealth: 0
+  MaxHealth: 500
+  CurrentHealth: 500
+  playerHP: 250
   Speed: 2.5
   Attackspd: 3
   MaxMana: 100
   CurrentMana: 0
   Magica: 50
-  inmunity: 0
-  VisionRange: 4.5
+  inmunity: 1
+  VisionRange: 4
+  attackRadius: 2.5
   OnRange: 1
+  attacking: 0
   SpellAtk: 0
 --- !u!212 &1906038300
 SpriteRenderer:
@@ -2134,6 +2142,81 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &1906038301
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1906038297}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.16078997, y: -0.099497795}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.75, y: 1.5625}
+    newSize: {x: 1.3125, y: 1.4375}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.38711214, y: 0.5981388}
+  m_EdgeRadius: 0
+--- !u!50 &1906038302
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1906038297}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 4
+--- !u!95 &1906038303
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1906038297}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c45c673ee39d8e14792b8e1275ced9fe, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1906038304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1906038297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db249aaa6a3cfba41acc67afccfa1acc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fixEveryFrame: 1
 --- !u!1001 &1948925921
 Prefab:
   m_ObjectHideFlags: 0

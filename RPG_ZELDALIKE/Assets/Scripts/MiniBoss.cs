@@ -5,8 +5,9 @@ using UnityEngine;
 public class MiniBoss : MonoBehaviour {
 
     [Header("Mini-Boss Health Settings")]
-    public int MaxHealth = 100;
-    public int CurrentHealth = 0;
+    public int MaxHealth = 500;
+    public int CurrentHealth = 500;
+    public int playerHP = 250;
     [Header("Mini-Boss Speed Settings")]
     public float Speed = 2.5f;
     public float Attackspd = 3f;
@@ -14,13 +15,14 @@ public class MiniBoss : MonoBehaviour {
     public int MaxMana = 100;
     public int CurrentMana = 0;
     public int Magica = 50; //Magic DMG
-    public bool inmunity;
+    public bool inmunity = true;
     public float VisionRange = 4.5f;
     public float attackRadius = 3.5f;
     public bool OnRange = true;
     public bool attacking;
     // 1.- Fire Ball 2.- Meteor Mash 3.- Darkness Sword 4.- Heal
     public int SpellAtk = 0;
+    BoxCollider2D Box;
 
     Animator anim;
 
@@ -33,10 +35,10 @@ public class MiniBoss : MonoBehaviour {
     Rigidbody2D rb2d;
     // Use this for initialization
     void Start() {
-
+        Box = GetComponent<BoxCollider2D>();
+        anim = GetComponent<Animator>();
         // Recuperamos al jugador gracias al Tag
         player = GameObject.FindGameObjectWithTag("Player");
-
         // Por defecto nuestro target siempre será nuestra posición inicial
         target = initialPosition;
 
@@ -90,7 +92,7 @@ public class MiniBoss : MonoBehaviour {
             anim.Play("Enemy_Walk", -1, 0);  // Congela la animación de andar
 
             ///-- Empezamos a atacar (importante una Layer en ataque para evitar Raycast)
-            if (!attacking) StartCoroutine(SpellAttack);
+            //if (!attacking) StartCoroutine("SpellAttack");
         }
         // En caso contrario nos movemos hacia él
         else
@@ -131,20 +133,37 @@ public class MiniBoss : MonoBehaviour {
             {
                 case 1:
                     Debug.Log("Fire Ball");
+                    playerHP -= (Magica - 10);
+                    Debug.Log("Player hp wnt down");
                     break;
                 case 2:
                     Debug.Log("Meteor Mash");
+                    playerHP -= (Magica - 15);
+                    Debug.Log("Player hp wnt down");
                     break;
                 case 3:
-                    Debug.Log("Darkness Sword");
+                    Debug.Log("Nightmare");
+                    playerHP -= (Magica - 20);
+                    Debug.Log("Player hp wnt down");
                     break;
                 case 4:
                     Debug.Log("Heal");
                     if (CurrentHealth != MaxHealth)
                     {
+                        Debug.Log("Health Restored");
                         CurrentHealth += 40;
                     }
                     break;
+            }
+
+            if (CurrentHealth <= 250 && inmunity == true)
+            {
+                Debug.Log("Invincible");
+                Box.enabled = false;
+                yield return new WaitForSeconds(5);
+                Box.enabled = true;
+                inmunity = false;
+                break;
             }
             yield return new WaitForSeconds(Attackspd);
         }
@@ -169,5 +188,18 @@ public class MiniBoss : MonoBehaviour {
             yield return new WaitForSeconds(seconds);
         }
         attacking = false; // Desactivamos la bandera
+    }
+
+    void Death()
+    {
+        if (CurrentHealth <= 0)
+        {
+            Debug.Log("Mini Boss Faded Away");
+            Destroy(gameObject);
+        }
+        if (playerHP <= 0)
+        {
+            Debug.Log("Player Killed");
+        }
     }
 }
